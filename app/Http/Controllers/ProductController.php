@@ -5,15 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Services\ProductService;
 
 class ProductController extends Controller
 {
+    protected $productService;
+
+    public function __construct(ProductService $productService)
+    {
+       $this->productService = $productService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $products = $this->productService->getAll();
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -21,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -29,7 +37,8 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $this->productService->create($request->validated());
+        return redirect()->route('products.index')->with('success', 'Product created successfully');
     }
 
     /**
@@ -37,7 +46,9 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        $product = $this->productService->getById($product->id);
+
+        return view('products.show', compact('product'));
     }
 
     /**
@@ -45,7 +56,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $product = $this->productService->getById($product->id);
+        return view('products.edit', compact('product'));
     }
 
     /**
@@ -53,7 +65,8 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $this->productService->update($product->id, $request->validated());
+        return redirect()->route('products.index')->with('success', 'Product updated successfully');
     }
 
     /**
@@ -61,6 +74,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->productService->delete($product->id);
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully');
     }
 }
