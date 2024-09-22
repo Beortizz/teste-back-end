@@ -18,6 +18,11 @@ class ProductService
         return $this->productRepository->getAll();
     }
 
+    public function getPaginatedProducts(int $perPage = 10)
+    {
+        return $this->productRepository->paginate($perPage);
+    }
+
     public function getById($id)
     {
         return $this->productRepository->getById($id);

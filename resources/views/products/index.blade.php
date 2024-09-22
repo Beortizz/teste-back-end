@@ -37,4 +37,7 @@
             </tr>
         @endforelse
     </x-table>
+    <div class="mt-4">
+        {{ $products->links() }}
+    </div>
 </x-app-layout>

@@ -15,9 +15,15 @@ class ProductRepository implements ProductInterface
         $this->model = $product;
     }
 
+
     public function getAll()
     {
         return $this->model->all();
+    }
+
+    public function paginate($perPage = 10)
+    {
+        return $this->model->paginate($perPage);
     }
 
     public function getById($id)
