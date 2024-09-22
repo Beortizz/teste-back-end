@@ -13,7 +13,7 @@ class ImportProducts extends Command
      *
      * @var string
      */
-    protected $signature = 'products:import';
+    protected $signature = 'products:import {--id=}';
 
     /**
      * The console command description.
@@ -27,17 +27,16 @@ class ImportProducts extends Command
      */
     public function handle()
     {
+
         $this->info('Importing products...');
         $fakeStoreUrl = env('FAKE_STORE_URL');
-        $response = Http::get("{$fakeStoreUrl}/products");
+        $id = $this->option('id');
 
+        if ($id) {
+            $response = Http::get("{$fakeStoreUrl}/products/{$id}");
 
-        if ($response->successful()) {
-
-            $products = $response->json();
-
-
-            foreach ($products as $productData) {
+            if (!empty($response->json()) && $response->successful()) {
+                $productData = $response->json();
                 Product::updateOrCreate(
                     ['id' => $productData['id']],
                     [
@@ -48,10 +47,37 @@ class ImportProducts extends Command
                         'image_url' => $productData['image'],
                     ]
                 );
+                $this->info('Product imported successfully');
+            } else {
+                $this->error('Failed to import product');
             }
-            $this->info('Products imported successfully');
+
         } else {
-            $this->error('Failed to import products');
+
+            $response = Http::get("{$fakeStoreUrl}/products");
+
+
+            if ($response->successful()) {
+
+                $products = $response->json();
+
+
+                foreach ($products as $productData) {
+                    Product::updateOrCreate(
+                        ['id' => $productData['id']],
+                        [
+                            'name' => $productData['title'],
+                            'price' => $productData['price'],
+                            'category' => $productData['category'],
+                            'description' => $productData['description'],
+                            'image_url' => $productData['image'],
+                        ]
+                    );
+                }
+                $this->info('Products imported successfully');
+            } else {
+                $this->error('Failed to import products');
+            }
         }
 
     }
