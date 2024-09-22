@@ -2,6 +2,7 @@
     <x-table url="{{ route('products.create') }}" title="Products">
         <x-slot name="header">
             <th scope="col" class="px-4 py-2 text-left">Product</th>
+            <th scope="col" class="px-4 py-2 text-left">Category</th>
             <th scope="col" class="px-4 py-2 text-left">Price</th>
             <th scope="col" class="px-4 py-2 text-left">Actions</th>
         </x-slot>
@@ -14,6 +15,7 @@
                         <span>{{ $product->name }}</span>
                     </div>
                 </td>
+                <td class="px-4 py-2">{{ $product->category }}</td>
                 <td class="px-4 py-2">${{ number_format($product->price, 2) }}</td>
                 <td class="px-4 py-2">
                     <div class="flex space-x-2">

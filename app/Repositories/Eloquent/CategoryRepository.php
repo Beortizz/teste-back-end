@@ -20,7 +20,7 @@ class CategoryRepository implements CategoryInterface
         return $this->model->all();
     }
 
-    public function getById($id):
+    public function getById($id)
     {
         return $this->model->findOrFail($id);
     }

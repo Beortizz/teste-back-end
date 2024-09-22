@@ -6,14 +6,16 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Services\ProductService;
-
+use App\Services\CategoryService;
 class ProductController extends Controller
 {
     protected $productService;
+    protected $categoryService;
 
-    public function __construct(ProductService $productService)
+    public function __construct(ProductService $productService, CategoryService $categoryService)
     {
        $this->productService = $productService;
+       $this->categoryService = $categoryService;
     }
     /**
      * Display a listing of the resource.
@@ -29,7 +31,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = $this->categoryService->getAll();
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -54,7 +57,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $categories = $this->categoryService->getAll();
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**

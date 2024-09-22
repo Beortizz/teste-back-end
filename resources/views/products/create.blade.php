@@ -19,12 +19,14 @@
             <div class="mb-4">
                 <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
                 <select name="category" id="category" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-blue-500 focus:border-blue-500" required>
-                    <option value="">Select a category</option>
-                    <option value="Electronics" {{ old('category') == 'Electronics' ? 'selected' : '' }}>Electronics</option>
-                    <option value="Clothing" {{ old('category') == 'Clothing' ? 'selected' : '' }}>Clothing</option>
-                    <option value="Books" {{ old('category') == 'Books' ? 'selected' : '' }}>Books</option>
-                    <option value="Toys" {{ old('category') == 'Toys' ? 'selected' : '' }}>Toys</option>
+                    <option value="" disabled>Select a category</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->name }}" {{ old('category') == $category->name ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
                 </select>
+                
             </div>
 
             <div class="mb-4">
