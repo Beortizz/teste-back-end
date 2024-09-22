@@ -68,4 +68,9 @@ class ProductService
         $product->image_url = $path;
         return $product;
     }
+
+    public function search(string $searchTerm = null, int $perPage = 10)
+    {
+        return $this->productRepository->search($searchTerm, $perPage);
+    }
 }

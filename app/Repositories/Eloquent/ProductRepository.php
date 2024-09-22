@@ -21,11 +21,6 @@ class ProductRepository implements ProductInterface
         return $this->model->all();
     }
 
-    public function paginate($perPage = 10)
-    {
-        return $this->model->paginate($perPage);
-    }
-
     public function getById($id)
     {
         return $this->model->findOrFail($id);
@@ -48,5 +43,22 @@ class ProductRepository implements ProductInterface
         $product = $this->model->findOrFail($id);
         $product->delete();
         return $product;
+    }
+
+    public function paginate($perPage = 10)
+    {
+        return $this->model->paginate($perPage);
+    }
+
+    public function search(string $searchTerm = null, int $perPage = 15)
+    {
+        $query = $this->model->query();
+
+        if ($searchTerm) {
+            $query->where('name', 'like', '%' . $searchTerm . '%')
+                  ->orWhere('category', 'like', '%' . $searchTerm . '%');
+        }
+
+        return $query->paginate($perPage);
     }
 }
