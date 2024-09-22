@@ -46,8 +46,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product = $this->productService->getById($product->id);
-
         return view('products.show', compact('product'));
     }
 
@@ -56,7 +54,6 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $product = $this->productService->getById($product->id);
         return view('products.edit', compact('product'));
     }
 
