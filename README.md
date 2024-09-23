@@ -1,3 +1,5 @@
+![Status](https://status.beortizz.com/api/badge/39/status)
+
 # Loja - Sistema de Gerenciamento de Produtos
 
 ## Descrição
