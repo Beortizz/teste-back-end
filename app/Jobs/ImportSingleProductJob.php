@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Product;
+use App\Models\Category;
 
 class ImportSingleProductJob implements ShouldQueue
 {
@@ -38,5 +39,10 @@ class ImportSingleProductJob implements ShouldQueue
                 'image_url' => $this->product['image'],
             ]
         );
+        Category::updateOrCreate(
+            ['name' => $this->product['category']],
+            ['name' => $this->product['category']]
+        );
+
     }
 }

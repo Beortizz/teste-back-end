@@ -9,6 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use App\Models\Product;
+use App\Models\Category;    
 
 class ImportProductsJob implements ShouldQueue
 {
@@ -38,6 +39,10 @@ class ImportProductsJob implements ShouldQueue
                     'description' => $productData['description'],
                     'image_url' => $productData['image'],
                 ]
+            );
+            Category::updateOrCreate(
+                ['name' => $productData['category']],
+                ['name' => $productData['category']]
             );
         }
     }
