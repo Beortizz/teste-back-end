@@ -99,7 +99,12 @@ Este projeto é um sistema básico de gerenciamento de produtos para uma loja, d
     ```bash
     php artisan serve
     ```
-8. **Acesse o Link**
+8. **Rode o de front-end**
+    ```bash
+    npm run dev
+    ```
+    
+9. **Acesse o Link**
     
     [127.0.0.1:8000](http://127.0.0.1:8000)
 
