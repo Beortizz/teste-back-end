@@ -35,6 +35,17 @@ class ProductsTable extends Component
         $this->resetPage();
     }
 
+    public function resetFilters()
+    {
+        $this->filter = [
+            'id' => null,
+            'product_with_image' => null,
+            'category' => null,
+        ];
+        $this->reset();
+        $this->resetPage();
+    }
+
     public function getCategories()
     {
         return $this->getCategoryService()->getAll();
@@ -43,7 +54,6 @@ class ProductsTable extends Component
 
     public function updatingSearchTerm()
     {
-        
         $this->resetPage(); 
     }
 
@@ -57,6 +67,8 @@ class ProductsTable extends Component
     {
         return app(CategoryService::class);
     }
+
+
 
     public function render()
     {
