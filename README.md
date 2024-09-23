@@ -86,7 +86,11 @@ Este projeto é um sistema básico de gerenciamento de produtos para uma loja, d
     ```bash
     php artisan migrate
     ```
-6. **Rode o seed do banco de dados (opcional)**
+6. **Faça o link com o storage**
+    ```bash
+    php artisan storage:link
+    ```
+7. **Rode o seed do banco de dados (opcional)**
     ```bash
     php artisan db:seed
     ```
@@ -95,16 +99,16 @@ Este projeto é um sistema básico de gerenciamento de produtos para uma loja, d
     - **Usuário**: `test@example.com`
     - **Senha**: `password`
 
-7. **Rode o servidor de back-end**
+8. **Rode o servidor de back-end**
     ```bash
     php artisan serve
     ```
-8. **Rode o de front-end**
+9. **Rode o de front-end**
     ```bash
     npm run dev
     ```
-    
-9. **Acesse o Link**
+
+10. **Acesse o Link**
     
     [127.0.0.1:8000](http://127.0.0.1:8000)
 
