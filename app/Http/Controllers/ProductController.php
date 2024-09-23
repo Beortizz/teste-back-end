@@ -7,6 +7,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Services\ProductService;
 use App\Services\CategoryService;
+use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     protected $productService;
@@ -20,11 +21,10 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
+    public function index(Request $request)
+    {   
         $products = $this->productService->getPaginatedProducts(10);
-        $productService = $this->productService;
-        return view('products.index', compact('products', 'productService'));
+        return view('products.index', compact('products'));
     }
 
     /**

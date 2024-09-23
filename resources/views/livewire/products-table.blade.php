@@ -6,7 +6,7 @@
             wire:model.live.debounce.500ms="searchTerm" placeholder="Search products...">
     </div>
   
-    @include('livewire.filter-modal')
+    @include('products.partials.filter-modal')
     <x-table url="{{ route('products.create') }}" title="Products">
         <x-slot name="actions">
             <button @click="showModal = true"
@@ -49,7 +49,7 @@
             </tr>
         @empty
             <tr>
-                <td colspan="3" class="text-center py-4">No products found.</td>
+                <td colspan="4" class="text-center py-4">No products found.</td>
             </tr>
         @endforelse
     </x-table>

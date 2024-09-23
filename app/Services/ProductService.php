@@ -18,9 +18,9 @@ class ProductService
         return $this->productRepository->getAll();
     }
 
-    public function getPaginatedProducts(int $perPage = 10)
+    public function getPaginatedProducts(int $perPage = 10, $filter = null, $searchTerm = null)
     {
-        return $this->productRepository->paginate($perPage);
+        return $this->productRepository->paginate($perPage, $filter, $searchTerm);
     }
 
     public function getById($id)
@@ -67,10 +67,5 @@ class ProductService
         $path = $image->storePubliclyAs('/products', $image->getClientOriginalName(), 'public');
         $product->image_url = $path;
         return $product;
-    }
-
-    public function search(string $searchTerm = null, int $perPage = 10)
-    {
-        return $this->productRepository->search($searchTerm, $perPage);
     }
 }

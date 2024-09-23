@@ -45,20 +45,9 @@ class ProductRepository implements ProductInterface
         return $product;
     }
 
-    public function paginate($perPage = 10)
+    public function paginate($perPage = 10, $filter = null, $searchTerm = null)
     {
-        return $this->model->paginate($perPage);
+        return $this->model->search($searchTerm)->filter($filter)->paginate($perPage);  
     }
 
-    public function search(string $searchTerm = null, int $perPage = 15)
-    {
-        $query = $this->model->query();
-
-        if ($searchTerm) {
-            $query->where('name', 'like', '%' . $searchTerm . '%')
-                  ->orWhere('category', 'like', '%' . $searchTerm . '%');
-        }
-
-        return $query->paginate($perPage);
-    }
 }

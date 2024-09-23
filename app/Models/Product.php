@@ -16,4 +16,33 @@ class Product extends Model
         'category',
         'image_url',
     ];
+
+    public function scopeSearch($query, $searchTerm)
+    {
+        if ($searchTerm) {
+            $query->where('name', 'like', '%' . $searchTerm . '%')
+                ->orWhere('description', 'like', '%' . $searchTerm . '%');
+        }
+        return $query;
+    }
+
+    public function scopeFilter($query, $filter)
+    {
+        if ($filter) {
+            if(isset($filter['category'])) {
+                $query->where('category', $filter['category']);
+            }
+            if(isset($filter['id'])) {
+                $query->where('id', $filter['id']);
+            }
+            
+            if(isset($filter['product_with_image']) && $filter['product_with_image'] == 'yes') {
+                $query->whereNotNull('image_url');
+            }
+            if(isset($filter['product_with_image']) && $filter['product_with_image'] == 'no') {
+                $query->whereNull('image_url');
+            }
+        }
+        return $query;
+    }
 }
