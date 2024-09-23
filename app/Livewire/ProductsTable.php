@@ -30,7 +30,7 @@ class ProductsTable extends Component
 
     public function applyFilters()
     {
-
+        $this->searchTerm = '';
         $this->dispatch('filtersApplied', $this->filter);
         $this->resetPage();
     }
@@ -54,6 +54,7 @@ class ProductsTable extends Component
 
     public function updatingSearchTerm()
     {
+        $this->resetFilters();
         $this->resetPage(); 
     }
 
