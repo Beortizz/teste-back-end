@@ -61,8 +61,8 @@ Este projeto é um sistema básico de gerenciamento de produtos para uma loja, d
 
 1. **Clonar o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/nome-do-repositorio.git
-   cd nome-do-repositorio
+   git clone https://github.com/seu-usuario/teste-back-end.git
+   cd teste-back-end
     ```
 2. **Instalar as depedências:**
    ```bash
