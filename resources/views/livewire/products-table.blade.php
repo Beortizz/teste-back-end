@@ -30,7 +30,7 @@
                 </td>
                 <td class="px-4 py-2">{{ $product->category }}</td>
                 <td class="px-4 py-2">${{ number_format($product->price, 2) }}</td>
-                <td class="px-4 py-2">
+                <td class="px-4 py-2 w-44">
                     <div class="flex space-x-2">
                         <a href="{{ route('products.show', $product) }}"
                             class="btn btn-sm bg-blue-500 text-white rounded px-2 py-1">View</a>

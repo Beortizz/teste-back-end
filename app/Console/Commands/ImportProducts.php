@@ -4,7 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
-use App\Models\Product;
+use App\Jobs\ImportProductsJob;
+use App\Jobs\ImportSingleProductJob;
 
 class ImportProducts extends Command
 {
@@ -36,17 +37,8 @@ class ImportProducts extends Command
             $response = Http::get("{$fakeStoreUrl}/products/{$id}");
 
             if (!empty($response->json()) && $response->successful()) {
-                $productData = $response->json();
-                Product::updateOrCreate(
-                    ['id' => $productData['id']],
-                    [
-                        'name' => $productData['title'],
-                        'price' => $productData['price'],
-                        'category' => $productData['category'],
-                        'description' => $productData['description'],
-                        'image_url' => $productData['image'],
-                    ]
-                );
+                $product = $response->json();
+                ImportSingleProductJob::dispatch($product);
                 $this->info('Product imported successfully');
             } else {
                 $this->error('Failed to import product');
@@ -55,25 +47,10 @@ class ImportProducts extends Command
         } else {
 
             $response = Http::get("{$fakeStoreUrl}/products");
-
-
+            
             if ($response->successful()) {
-
                 $products = $response->json();
-
-
-                foreach ($products as $productData) {
-                    Product::updateOrCreate(
-                        ['id' => $productData['id']],
-                        [
-                            'name' => $productData['title'],
-                            'price' => $productData['price'],
-                            'category' => $productData['category'],
-                            'description' => $productData['description'],
-                            'image_url' => $productData['image'],
-                        ]
-                    );
-                }
+                ImportProductsJob::dispatch($products);
                 $this->info('Products imported successfully');
             } else {
                 $this->error('Failed to import products');
