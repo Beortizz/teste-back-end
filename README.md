@@ -114,3 +114,19 @@ Este projeto é um sistema básico de gerenciamento de produtos para uma loja, d
     
     [127.0.0.1:8000](http://127.0.0.1:8000)
 
+## Rodando com Docker
+
+Pré-requisito: [Docker](https://www.docker.com/) e Docker Compose.
+
+1. Copie o `.env.example` para `.env`.
+2. Suba os containers:
+```bash
+docker compose up -d
+```
+3. O container `app` roda `composer install`, `key:generate` e `migrate` automaticamente no start. O container `node` sobe o Vite em modo dev com HMR.
+4. Acesse:
+   - App: http://localhost:8004
+   - Vite (dev server): http://localhost:5176
+   - phpMyAdmin: http://localhost:8084
+   - MySQL exposto em: `localhost:3310`
+

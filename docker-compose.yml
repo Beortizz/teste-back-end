@@ -1,0 +1,68 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/var/www/html
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-laravel}
+      DB_USERNAME: ${DB_USERNAME:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-root}
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks: [products-manager]
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8004:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on: [app]
+    networks: [products-manager]
+
+  node:
+    image: node:20
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "5176:5176"
+    networks: [products-manager]
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE:-laravel}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-root}
+    ports:
+      - "3310:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks: [products-manager]
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: mysql
+    ports:
+      - "8084:80"
+    depends_on: [mysql]
+    networks: [products-manager]
+
+volumes:
+  dbdata:
+
+networks:
+  products-manager:
